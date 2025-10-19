@@ -35,7 +35,10 @@ if __name__ == "__main__":
     category2 = Category("Телевизоры",
                          """Современный телевизор, который позволяет наслаждаться просмотром,
                          станет вашим другом и помощником""",
-                         [product4])
+                         [])
+    
+    # Добавляем товар с помощью метода add_product()
+    category2.add_product(product4)
 
     print(category2.name)
     print(category2.description)
@@ -44,3 +47,10 @@ if __name__ == "__main__":
 
     print(Category.category_count)
     print(Category.product_count)
+    
+    # Демонстрация добавления еще одного товара
+    product5 = Product("Samsung 65\" QLED", "4K UHD, Smart TV", 150000.0, 3)
+    category2.add_product(product5)
+    
+    print(f"После добавления товара: {len(category2.products)} товаров в категории")
+    print(f"Общее количество товаров: {Category.product_count}")
