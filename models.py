@@ -25,7 +25,18 @@ class Category:
         self.__products.append(product)
         Category.product_count += 1
 
+    def get_products_list(self):
+        """Возвращает список объектов товаров (только для чтения)"""
+        return self.__products.copy()
+
     @property
     def products(self):
-        """Возвращает список товаров (только для чтения)"""
-        return self.__products.copy()
+        """Возвращает список товаров в формате строк"""
+        if not self.__products:
+            return "Товары отсутствуют"
+        
+        products_list = []
+        for product in self.__products:
+            products_list.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.")
+        
+        return "\n".join(products_list)

@@ -27,7 +27,9 @@ if __name__ == "__main__":
 
     print(category1.name == "Смартфоны")
     print(category1.description)
-    print(len(category1.products))
+    print(f"Количество товаров в категории: {len(category1.get_products_list())}")
+    print("Список товаров:")
+    print(category1.products)
     print(Category.category_count)
     print(Category.product_count)
 
@@ -42,7 +44,8 @@ if __name__ == "__main__":
 
     print(category2.name)
     print(category2.description)
-    print(len(category2.products))
+    print(f"Количество товаров в категории: {len(category2.get_products_list())}")
+    print("Список товаров:")
     print(category2.products)
 
     print(Category.category_count)
@@ -52,5 +55,7 @@ if __name__ == "__main__":
     product5 = Product("Samsung 65\" QLED", "4K UHD, Smart TV", 150000.0, 3)
     category2.add_product(product5)
     
-    print(f"После добавления товара: {len(category2.products)} товаров в категории")
+    print(f"После добавления товара: {len(category2.get_products_list())} товаров в категории")
+    print("Обновленный список товаров:")
+    print(category2.products)
     print(f"Общее количество товаров: {Category.product_count}")
