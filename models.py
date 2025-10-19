@@ -2,8 +2,39 @@ class Product:
     def __init__(self, name: str, description: str, price: float, quantity: int):
         self.name = name
         self.description = description
-        self.price = float(price)
+        self.__price = float(price)  # Приватный атрибут
         self.quantity = int(quantity)
+
+    @property
+    def price(self):
+        """Геттер для атрибута price"""
+        return self.__price
+
+    @price.setter
+    def price(self, value):
+        """Сеттер для атрибута price с проверкой на положительное значение"""
+        if value <= 0:
+            print("Цена не должна быть нулевая или отрицательная")
+        else:
+            self.__price = float(value)
+
+    @classmethod
+    def new_product(cls, product_data: dict):
+        """
+        Создает новый объект Product из словаря с параметрами
+
+        Args:
+            product_data (dict): Словарь с ключами 'name', 'description', 'price', 'quantity'
+
+        Returns:
+            Product: Новый объект класса Product
+        """
+        return cls(
+            name=product_data['name'],
+            description=product_data['description'],
+            price=product_data['price'],
+            quantity=product_data['quantity']
+        )
 
 
 class Category:
@@ -34,9 +65,9 @@ class Category:
         """Возвращает список товаров в формате строк"""
         if not self.__products:
             return "Товары отсутствуют"
-        
+
         products_list = []
         for product in self.__products:
             products_list.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.")
-        
+
         return "\n".join(products_list)

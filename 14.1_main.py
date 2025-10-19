@@ -1,4 +1,4 @@
-from models import Product, Category
+from models import Category, Product
 
 if __name__ == "__main__":
     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
@@ -38,7 +38,7 @@ if __name__ == "__main__":
                          """Современный телевизор, который позволяет наслаждаться просмотром,
                          станет вашим другом и помощником""",
                          [])
-    
+
     # Добавляем товар с помощью метода add_product()
     category2.add_product(product4)
 
@@ -50,12 +50,63 @@ if __name__ == "__main__":
 
     print(Category.category_count)
     print(Category.product_count)
-    
+
     # Демонстрация добавления еще одного товара
     product5 = Product("Samsung 65\" QLED", "4K UHD, Smart TV", 150000.0, 3)
     category2.add_product(product5)
-    
     print(f"После добавления товара: {len(category2.get_products_list())} товаров в категории")
     print("Обновленный список товаров:")
     print(category2.products)
     print(f"Общее количество товаров: {Category.product_count}")
+
+    # Демонстрация использования класс-метода new_product
+    print("\n" + "=" * 50)
+    print("ДЕМОНСТРАЦИЯ КЛАСС-МЕТОДА new_product")
+    print("=" * 50)
+
+    # Создаем товар из словаря
+    product_data = {
+        'name': 'MacBook Pro 16"',
+        'description': 'M3 Pro, 18GB RAM, 512GB SSD',
+        'price': 250000.0,
+        'quantity': 2
+    }
+
+    product6 = Product.new_product(product_data)
+    print("Создан товар через класс-метод:")
+    print(f"Название: {product6.name}")
+    print(f"Описание: {product6.description}")
+    print(f"Цена: {product6.price} руб.")
+    print(f"Количество: {product6.quantity} шт.")
+
+    # Добавляем новый товар в категорию
+    category2.add_product(product6)
+    print("\nПосле добавления товара через класс-метод:")
+    print(f"Количество товаров в категории: {len(category2.get_products_list())}")
+    print("Финальный список товаров:")
+    print(category2.products)
+    print(f"Общее количество товаров: {Category.product_count}")
+
+    # Демонстрация работы с приватным атрибутом price
+    print("\n" + "=" * 50)
+    print("ДЕМОНСТРАЦИЯ РАБОТЫ С ПРИВАТНЫМ АТРИБУТОМ PRICE")
+    print("=" * 50)
+
+    # Создаем тестовый товар
+    test_product = Product("Тестовый товар", "Для демонстрации", 1000.0, 5)
+    print(f"Исходная цена товара: {test_product.price} руб.")
+
+    # Пытаемся установить положительную цену
+    test_product.price = 1500.0
+    print(f"Цена после изменения на 1500: {test_product.price} руб.")
+
+    # Пытаемся установить нулевую цену
+    print("Попытка установить нулевую цену:")
+    test_product.price = 0
+
+    # Пытаемся установить отрицательную цену
+    print("Попытка установить отрицательную цену:")
+    test_product.price = -100
+
+    # Проверяем, что цена не изменилась
+    print(f"Цена после попыток установить недопустимые значения: {test_product.price} руб.")
