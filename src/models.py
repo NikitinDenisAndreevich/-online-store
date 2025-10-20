@@ -18,6 +18,10 @@ class Product:
         else:
             self.__price = float(value)
 
+    def __str__(self):
+        """Строковое представление продукта"""
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
     @classmethod
     def new_product(cls, product_data: dict):
         """
@@ -51,6 +55,10 @@ class Category:
         Category.category_count += 1
         Category.product_count += len(self.__products)
 
+    def __str__(self):
+        """Строковое представление категории"""
+        return f"{self.name}, количество продуктов: {len(self.__products)} шт."
+
     def add_product(self, product: Product):
         """Добавляет товар в категорию"""
         self.__products.append(product)
@@ -68,6 +76,6 @@ class Category:
 
         products_list = []
         for product in self.__products:
-            products_list.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.")
+            products_list.append(str(product))
 
         return "\n".join(products_list)

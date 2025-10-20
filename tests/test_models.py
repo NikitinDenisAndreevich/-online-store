@@ -1,6 +1,6 @@
 import pytest
 
-from scr.models import Category, Product
+from src.models import Category, Product
 
 
 @pytest.fixture(autouse=True)
