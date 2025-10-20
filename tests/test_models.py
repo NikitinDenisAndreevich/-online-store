@@ -1,11 +1,11 @@
 import pytest
 
-from models import Category, Product
+from scr.models import Category, Product
 
 
 @pytest.fixture(autouse=True)
 def reset_counters():
-    # Ensure each test starts with clean counters
+    # Ensure each tests starts with clean counters
     Category.category_count = 0
     Category.product_count = 0
     yield
