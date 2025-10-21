@@ -18,6 +18,32 @@ class Product:
         else:
             self.__price = float(value)
 
+    def __str__(self):
+        """Строковое представление продукта"""
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        """Складывает общую стоимость товара на складе с другим значением.
+
+        Поддерживаемые варианты:
+        - Product + Product -> сумма (price*quantity) по двум товарам
+        - Product + (int|float) -> (price*quantity) + число
+        """
+        self_total = self.price * self.quantity
+        if isinstance(other, Product):
+            return self_total + other.price * other.quantity
+        if isinstance(other, (int, float)):
+            return self_total + other
+        return NotImplemented
+
+    def __radd__(self, other):
+        """Поддержка суммирования, например sum([p1, p2], 0)."""
+        if isinstance(other, (int, float)):
+            return other + self.price * self.quantity
+        if isinstance(other, Product):
+            return self.__add__(other)
+        return NotImplemented
+
     @classmethod
     def new_product(cls, product_data: dict):
         """
@@ -51,6 +77,11 @@ class Category:
         Category.category_count += 1
         Category.product_count += len(self.__products)
 
+    def __str__(self):
+        """Строковое представление категории"""
+        total_quantity = sum(product.quantity for product in self.__products)
+        return f"{self.name}, количество продуктов: {total_quantity} шт."
+
     def add_product(self, product: Product):
         """Добавляет товар в категорию"""
         self.__products.append(product)
@@ -68,6 +99,6 @@ class Category:
 
         products_list = []
         for product in self.__products:
-            products_list.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.")
+            products_list.append(str(product))
 
         return "\n".join(products_list)
