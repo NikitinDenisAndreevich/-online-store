@@ -199,3 +199,53 @@ def test_get_products_list_returns_copy():
     assert products_list1 is not products_list2
     # Но содержимое одинаковое
     assert products_list1 == products_list2
+
+
+def test_product_addition():
+    """Тест сложения продуктов - проверка метода __add__"""
+    # Создаем продукты как в примере из задания
+    product_a = Product("a", "Товар A", 100.0, 10)  # цена 100, количество 10
+    product_b = Product("b", "Товар B", 200.0, 2)   # цена 200, количество 2
+
+    # Проверяем сложение двух продуктов
+    result = product_a + product_b
+    expected = 100 * 10 + 200 * 2  # 1000 + 400 = 1400
+    assert result == expected
+
+    # Проверяем сложение продукта с числом
+    result_with_number = product_a + 500
+    expected_with_number = 100 * 10 + 500  # 1000 + 500 = 1500
+    assert result_with_number == expected_with_number
+
+    # Проверяем коммутативность (product + number = number + product)
+    result_reverse = 500 + product_a
+    assert result_reverse == expected_with_number
+
+
+def test_product_addition_edge_cases():
+    """Тест граничных случаев для сложения продуктов"""
+    product = Product("Test", "Test", 50.0, 3)
+
+    # Сложение с нулем
+    assert product + 0 == 150.0
+    assert 0 + product == 150.0
+
+    # Сложение с отрицательным числом
+    assert product + (-50) == 100.0
+    assert (-50) + product == 100.0
+
+    # Сложение с другим продуктом с нулевым количеством
+    empty_product = Product("Empty", "Empty", 100.0, 0)
+    assert product + empty_product == 150.0
+    assert empty_product + product == 150.0
+
+
+def test_category_str_shows_total_quantity():
+    """__str__ категории должен показывать сумму quantity всех товаров"""
+    p1 = Product("X", "x", 10.0, 3)
+    p2 = Product("Y", "y", 20.0, 7)
+    category = Category("Mix", "desc", [p1, p2])
+
+    # total quantity = 3 + 7 = 10
+    s = str(category)
+    assert "Mix, количество продуктов: 10 шт." in s
