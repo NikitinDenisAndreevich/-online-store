@@ -24,7 +24,14 @@ class Category:
         return f"{self.name}, количество продуктов: {total_quantity} шт."
 
     def add_product(self, product: Product):
-        """Добавляет товар в категорию"""
+        """
+        Добавляет товар в категорию.
+        Защищен от добавления объектов, не являющихся продуктами или их наследниками.
+        """
+        # Проверяем, что объект является продуктом или его наследником
+        if not isinstance(product, Product):
+            raise TypeError("В категорию можно добавлять только продукты или их наследников")
+
         self.__products.append(product)
         Category.product_count += 1
 
