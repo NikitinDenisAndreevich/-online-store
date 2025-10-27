@@ -1,5 +1,14 @@
-class Product:
+try:
+    from .base_product import BaseProduct
+    from .logging_mixin import LoggingMixin
+except ImportError:
+    from base_product import BaseProduct
+    from logging_mixin import LoggingMixin
+
+
+class Product(LoggingMixin, BaseProduct):
     def __init__(self, name: str, description: str, price: float, quantity: int):
+        super().__init__(name, description, price, quantity)
         self.name = name
         self.description = description
         self.__price = float(price)  # Приватный атрибут
@@ -43,6 +52,15 @@ class Product:
         if isinstance(other, Product):
             return self.__add__(other)
         return NotImplemented
+
+    def get_total_value(self) -> float:
+        """
+        Возвращает общую стоимость товара на складе.
+
+        Returns:
+            float: Общая стоимость (цена * количество)
+        """
+        return self.price * self.quantity
 
     @classmethod
     def new_product(cls, product_data: dict):
