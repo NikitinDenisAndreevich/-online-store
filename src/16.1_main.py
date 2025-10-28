@@ -2,7 +2,10 @@
 Пример использования классов-наследников Smartphone и LawnGrass.
 Демонстрирует наследование от класса Product и специфичные возможности.
 """
-from models import Category, LawnGrass, Product, Smartphone
+try:
+    from .models import Category, LawnGrass, Product, Smartphone
+except ImportError:
+    from models import Category, LawnGrass, Product, Smartphone
 
 if __name__ == '__main__':
     print("=" * 60)
