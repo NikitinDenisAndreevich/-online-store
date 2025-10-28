@@ -50,3 +50,17 @@ class Category:
             products_list.append(str(product))
 
         return "\n".join(products_list)
+
+    def average_price(self):
+        """
+        Подсчитывает средний ценник всех товаров в категории.
+
+        Returns:
+            float: Средняя цена товаров. Возвращает 0, если в категории нет товаров.
+        """
+        try:
+            total_price = sum(product.price for product in self.__products)
+            average = total_price / len(self.__products)
+            return average
+        except ZeroDivisionError:
+            return 0

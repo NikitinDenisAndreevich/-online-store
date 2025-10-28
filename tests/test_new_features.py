@@ -145,11 +145,9 @@ class TestProductWithNewFeatures:
         assert total_value == 500.0  # 100.0 * 5
 
     def test_product_get_total_value_zero_quantity(self):
-        """Тест метода get_total_value с нулевым количеством"""
-        product = Product("Test", "Test", 100.0, 0)
-
-        total_value = product.get_total_value()
-        assert total_value == 0.0  # 100.0 * 0
+        """Тест что нельзя создать продукт с нулевым количеством"""
+        with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+            Product("Test", "Test", 100.0, 0)
 
     def test_product_get_total_value_after_price_change(self):
         """Тест метода get_total_value после изменения цены"""

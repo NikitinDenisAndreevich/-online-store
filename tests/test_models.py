@@ -234,10 +234,9 @@ def test_product_addition_edge_cases():
     assert product + (-50) == 100.0
     assert (-50) + product == 100.0
 
-    # Сложение с другим продуктом с нулевым количеством
-    empty_product = Product("Empty", "Empty", 100.0, 0)
-    assert product + empty_product == 150.0
-    assert empty_product + product == 150.0
+    # Нельзя создать продукт с нулевым количеством
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+        Product("Empty", "Empty", 100.0, 0)
 
 
 def test_category_str_shows_total_quantity():
@@ -249,3 +248,48 @@ def test_category_str_shows_total_quantity():
     # total quantity = 3 + 7 = 10
     s = str(category)
     assert "Mix, количество продуктов: 10 шт." in s
+
+
+# Тесты для новой функциональности (Задание 17.1)
+
+def test_product_zero_quantity_raises_value_error():
+    """Тест что создание товара с нулевым количеством вызывает ValueError"""
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+        Product("Test Product", "Description", 100.0, 0)
+
+
+def test_category_average_price_with_products():
+    """Тест метода average_price с товарами в категории"""
+    p1 = Product("Product 1", "Desc 1", 100.0, 5)
+    p2 = Product("Product 2", "Desc 2", 200.0, 3)
+    p3 = Product("Product 3", "Desc 3", 300.0, 2)
+    category = Category("Test Category", "Description", [p1, p2, p3])
+
+    # Средняя цена = (100 + 200 + 300) / 3 = 200.0
+    assert category.average_price() == 200.0
+
+
+def test_category_average_price_with_single_product():
+    """Тест метода average_price с одним товаром в категории"""
+    p1 = Product("Product 1", "Desc 1", 150.0, 10)
+    category = Category("Test Category", "Description", [p1])
+
+    assert category.average_price() == 150.0
+
+
+def test_category_average_price_empty_category():
+    """Тест метода average_price с пустой категорией (деление на ноль)"""
+    category = Category("Empty Category", "Description", [])
+
+    # Должен вернуть 0 при пустой категории
+    assert category.average_price() == 0
+
+
+def test_category_average_price_with_different_prices():
+    """Тест метода average_price с товарами разных цен"""
+    p1 = Product("Product 1", "Desc 1", 10.0, 2)
+    p2 = Product("Product 2", "Desc 2", 20.0, 3)
+    category = Category("Test Category", "Description", [p1, p2])
+
+    # Средняя цена = (10 + 20) / 2) = 15.0
+    assert category.average_price() == 15.0

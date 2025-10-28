@@ -350,3 +350,28 @@ class TestAdditionBetweenDifferentTypes:
         # Должна возникнуть ошибка TypeError
         with pytest.raises(TypeError):
             _ = lawn_grass + product
+
+
+class TestZeroQuantityValidation:
+    """Тесты валидации нулевого количества для всех классов продуктов"""
+
+    def test_product_zero_quantity_raises_error(self):
+        """Тест что Product не может быть создан с quantity=0"""
+        with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+            Product("Test", "Test", 100.0, 0)
+
+    def test_smartphone_zero_quantity_raises_error(self):
+        """Тест что Smartphone не может быть создан с quantity=0"""
+        with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+            Smartphone(
+                name="Test", description="Test", price=100.0, quantity=0,
+                efficiency="Test", model="Test", memory=64, color="Test"
+            )
+
+    def test_lawn_grass_zero_quantity_raises_error(self):
+        """Тест что LawnGrass не может быть создан с quantity=0"""
+        with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+            LawnGrass(
+                name="Test", description="Test", price=100.0, quantity=0,
+                country="Test", germination_period=14, color="Test"
+            )
