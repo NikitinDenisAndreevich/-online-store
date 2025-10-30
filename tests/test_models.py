@@ -266,7 +266,7 @@ def test_category_average_price_with_products():
     category = Category("Test Category", "Description", [p1, p2, p3])
 
     # Средняя цена = (100 + 200 + 300) / 3 = 200.0
-    assert category.average_price() == 200.0
+    assert category.middle_price() == 200.0
 
 
 def test_category_average_price_with_single_product():
@@ -274,7 +274,7 @@ def test_category_average_price_with_single_product():
     p1 = Product("Product 1", "Desc 1", 150.0, 10)
     category = Category("Test Category", "Description", [p1])
 
-    assert category.average_price() == 150.0
+    assert category.middle_price() == 150.0
 
 
 def test_category_average_price_empty_category():
@@ -282,7 +282,7 @@ def test_category_average_price_empty_category():
     category = Category("Empty Category", "Description", [])
 
     # Должен вернуть 0 при пустой категории
-    assert category.average_price() == 0
+    assert category.middle_price() == 0
 
 
 def test_category_average_price_with_different_prices():
@@ -292,4 +292,4 @@ def test_category_average_price_with_different_prices():
     category = Category("Test Category", "Description", [p1, p2])
 
     # Средняя цена = (10 + 20) / 2) = 15.0
-    assert category.average_price() == 15.0
+    assert category.middle_price() == 15.0

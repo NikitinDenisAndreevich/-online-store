@@ -51,7 +51,7 @@ class Category:
 
         return "\n".join(products_list)
 
-    def average_price(self):
+    def middle_price(self):
         """
         Подсчитывает средний ценник всех товаров в категории.
 
